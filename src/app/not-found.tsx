@@ -1,5 +1,7 @@
+// src/app/not-found.tsx
+'use client'; // Added this line
 
-import { Link } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion } from "framer-motion";
@@ -23,13 +25,13 @@ export default function NotFound() {
         
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Button asChild variant="outline">
-            <Link to={user ? `/${user.role}` : "/"}>
+            <Link href={user ? `/${user.role}` : "/"}> {/* Changed to href */}
               Return to Dashboard
             </Link>
           </Button>
           
           <Button asChild>
-            <Link to="/">
+            <Link href="/"> {/* Changed to href */}
               Go Home
             </Link>
           </Button>

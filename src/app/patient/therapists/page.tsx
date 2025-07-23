@@ -1,6 +1,8 @@
-
+'use client';
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MessageCircle, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import Image from 'next/image'
+;
 
 // Demo therapist data
 const demoTherapists = [
@@ -242,7 +246,7 @@ export default function PatientTherapists() {
                   </CardContent>
                   
                   <CardFooter className="flex gap-2 pt-3">
-                    <Link to={`/patient/chat/${therapist.id}`} className="flex-1">
+                    <Link href={`/patient/chat/${therapist.id}`} className="flex-1">
                       <Button variant="default" className="w-full">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Message

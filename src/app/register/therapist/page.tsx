@@ -1,6 +1,9 @@
+// src/app/register/therapist/page.tsx
+'use client'; // Added this line
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
+import { useRouter } from "next/navigation"; // Changed from useNavigate
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import Image from "next/image"; // Added for profile image
 
 const expertiseOptions = [
   { label: "Anxiety", value: "anxiety" },
@@ -46,7 +50,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function RegisterTherapist() {
   const { register: registerUser, loading } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter(); // Changed from useNavigate
   const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
@@ -85,8 +89,6 @@ export default function RegisterTherapist() {
   };
   
   const onSubmit = async (data: FormData) => {
-    // In a real app, you would upload the images to storage and get URLs
-    // For demo purposes, we'll use placeholders
     const profilePicUrl = profileImagePreview || "https://i.pravatar.cc/150?img=" + Math.floor(Math.random() * 70);
     
     try {
@@ -215,10 +217,12 @@ export default function RegisterTherapist() {
               <div className="flex items-center gap-4">
                 {profileImagePreview && (
                   <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                    <img 
+                    <Image // Changed from <img>
                       src={profileImagePreview} 
                       alt="Profile preview" 
                       className="w-full h-full object-cover"
+                      width={64} // Added
+                      height={64} // Added
                     />
                   </div>
                 )}
@@ -397,7 +401,7 @@ export default function RegisterTherapist() {
       
       <div className="mt-6 text-center text-sm">
         <span className="text-muted-foreground">Already have an account?</span>{" "}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link href="/login" className="text-primary hover:underline"> {/* Changed to href */}
           Login here
         </Link>
       </div>

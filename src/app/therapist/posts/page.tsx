@@ -1,6 +1,8 @@
-
+'use client';
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -199,7 +201,7 @@ export default function TherapistPosts() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <PageTitle title="Mental Health Posts" subtitle="Share insights and resources with your patients" />
           
-          <Link to="/therapist/posts/create">
+          <Link href="/therapist/posts/create">
             <Button>
               <Plus className="h-4 w-4 mr-2" />
               Create Post
@@ -365,7 +367,7 @@ export default function TherapistPosts() {
                     : "No posts match your search criteria."}
               </p>
               {activeTab === "my-posts" && (
-                <Link to="/therapist/posts/create">
+                <Link href="/therapist/posts/create">
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
                     Create your first post

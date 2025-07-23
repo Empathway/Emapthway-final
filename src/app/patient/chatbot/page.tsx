@@ -1,4 +1,4 @@
-
+'use client';
 import { useState, useRef, useEffect } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";

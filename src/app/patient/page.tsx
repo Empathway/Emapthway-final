@@ -1,11 +1,13 @@
 
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { useAuth } from "@/contexts/AuthContext";
 import { Bell, Brain, Calendar, MessageCircle, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function PatientDashboard() {
@@ -41,7 +43,7 @@ export default function PatientDashboard() {
           animate="show"
         >
           <motion.div variants={item}>
-            <Link to="/patient/chatbot">
+            <Link href="/patient/chatbot">
               <Card className="h-full bg-black/50 border-border backdrop-blur-md hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -63,7 +65,7 @@ export default function PatientDashboard() {
           </motion.div>
 
           <motion.div variants={item}>
-            <Link to="/patient/therapists">
+            <Link href="/patient/therapists">
               <Card className="h-full bg-black/50 border-border backdrop-blur-md hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -85,7 +87,7 @@ export default function PatientDashboard() {
           </motion.div>
 
           <motion.div variants={item}>
-            <Link to="/patient/anxiety-calmer">
+            <Link href="/patient/anxiety-calmer">
               <Card className="h-full bg-black/50 border-border backdrop-blur-md hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">

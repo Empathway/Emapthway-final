@@ -1,6 +1,9 @@
+// src/app/reset-password/page.tsx
+'use client'; // Added this line
 
 import { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
+import { useRouter, useSearchParams } from "next/navigation"; // Changed from useNavigate, useSearchParams
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,10 +31,10 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams(); // Changed from useSearchParams from react-router-dom
+  const router = useRouter(); // Changed from useNavigate
   
-  const token = searchParams.get("token");
+  const token = searchParams.get("token"); // Access token from Next.js useSearchParams
   
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -49,7 +52,7 @@ export default function ResetPassword() {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       toast.success("Password has been reset successfully");
-      navigate("/login");
+      router.push("/login"); // Changed from navigate
     } catch (error) {
       toast.error("Failed to reset password. Please try again.");
       console.error("Password reset error:", error);
@@ -156,7 +159,7 @@ export default function ResetPassword() {
       </form>
       
       <div className="mt-6 text-center text-sm">
-        <Link to="/login" className="text-primary hover:underline">
+        <Link href="/login" className="text-primary hover:underline"> {/* Changed to href */}
           Back to login
         </Link>
       </div>

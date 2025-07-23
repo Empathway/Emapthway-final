@@ -1,6 +1,9 @@
+// src/app/register/patient/page.tsx
+'use client'; // Added this line
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
+import { useRouter } from "next/navigation"; // Changed from useNavigate
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,6 +14,7 @@ import { AuthLayout } from "@/components/layouts/AuthLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, Upload } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image"; // Added for profile image
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -24,7 +28,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function RegisterPatient() {
   const { register: registerUser, loading } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter(); // Changed from useNavigate
   const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
@@ -49,8 +53,6 @@ export default function RegisterPatient() {
   };
   
   const onSubmit = async (data: FormData) => {
-    // In a real app, you would upload the image to storage and get a URL
-    // For demo purposes, we'll use a placeholder if no image was selected
     const profilePicUrl = profileImagePreview || "https://i.pravatar.cc/150?img=" + Math.floor(Math.random() * 70);
     
     try {
@@ -176,10 +178,12 @@ export default function RegisterPatient() {
               <div className="flex items-center gap-4">
                 {profileImagePreview && (
                   <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                    <img 
+                    <Image // Changed from <img>
                       src={profileImagePreview} 
                       alt="Profile preview" 
                       className="w-full h-full object-cover"
+                      width={64} // Added
+                      height={64} // Added
                     />
                   </div>
                 )}
@@ -245,7 +249,7 @@ export default function RegisterPatient() {
       
       <div className="mt-6 text-center text-sm">
         <span className="text-muted-foreground">Already have an account?</span>{" "}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link href="/login" className="text-primary hover:underline"> {/* Changed to href */}
           Login here
         </Link>
       </div>

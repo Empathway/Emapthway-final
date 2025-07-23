@@ -1,6 +1,9 @@
+// src/app/forgot-password/page.tsx
+'use client'; // Added this line
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
+// Removed useNavigate as it's not used in this specific file's logic
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -147,7 +150,7 @@ export default function ForgotPassword() {
       )}
       
       <div className="mt-6 text-center text-sm">
-        <Link to="/login" className="text-primary hover:underline">
+        <Link href="/login" className="text-primary hover:underline"> {/* Changed to href */}
           Back to login
         </Link>
       </div>

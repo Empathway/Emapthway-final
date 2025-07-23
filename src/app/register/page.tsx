@@ -1,5 +1,7 @@
+// src/app/register/page.tsx
+'use client'; // Added this line
 
-import { Link } from "react-router-dom";
+import Link from "next/link"; // Changed from 'react-router-dom'
 import { Button } from "@/components/ui/button";
 import { AuthLayout } from "@/components/layouts/AuthLayout";
 import { motion } from "framer-motion";
@@ -33,7 +35,7 @@ export default function Register() {
         className="grid gap-4 mt-6 sm:grid-cols-2"
       >
         <motion.div variants={item}>
-          <Link to="/register/patient">
+          <Link href="/register/patient"> {/* Changed to href */}
             <div className="group h-full overflow-hidden rounded-xl border border-border bg-black/50 p-6 hover:border-primary/50 hover:bg-black/70 transition-all duration-300">
               <div className="flex flex-col items-center text-center h-full gap-4">
                 <div className="rounded-full bg-primary/20 p-4">
@@ -65,7 +67,7 @@ export default function Register() {
         </motion.div>
 
         <motion.div variants={item}>
-          <Link to="/register/therapist">
+          <Link href="/register/therapist"> {/* Changed to href */}
             <div className="group h-full overflow-hidden rounded-xl border border-border bg-black/50 p-6 hover:border-primary/50 hover:bg-black/70 transition-all duration-300">
               <div className="flex flex-col items-center text-center h-full gap-4">
                 <div className="rounded-full bg-primary/20 p-4">
@@ -99,7 +101,7 @@ export default function Register() {
 
       <div className="mt-6 text-center text-sm">
         <span className="text-muted-foreground">Already have an account?</span>{" "}
-        <Link to="/login" className="text-primary hover:underline">
+        <Link href="/login" className="text-primary hover:underline"> {/* Changed to href */}
           Log in
         </Link>
       </div>

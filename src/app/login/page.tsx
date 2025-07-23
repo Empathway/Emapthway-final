@@ -1,6 +1,8 @@
+'use client';
 
+import Link from 'next/link';
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useNavigate } from 'react-router-dom';
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -132,7 +135,7 @@ export default function Login() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
                     <Link
-                      to="/forgot-password"
+                      href="/forgot-password"
                       className="text-xs text-primary hover:underline"
                     >
                       Forgot password?
@@ -180,7 +183,7 @@ export default function Login() {
       
       <div className="mt-6 text-center text-sm">
         <span className="text-muted-foreground">Don't have an account?</span>{" "}
-        <Link to="/register" className="text-primary hover:underline">
+        <Link href="/register" className="text-primary hover:underline">
           Sign up
         </Link>
       </div>

@@ -1,6 +1,8 @@
-
+'use client';
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+// import { useParams, useNavigate, Link } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { Button } from "@/components/ui/button";
@@ -322,7 +324,7 @@ export default function PatientChat() {
               {conversations.map(conv => (
                 <Link
                   key={conv.id}
-                  to={`/patient/chat/${conv.id}`}
+                  href={`/patient/chat/${conv.id}`}
                 >
                   <div 
                     className={`flex items-center gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors ${

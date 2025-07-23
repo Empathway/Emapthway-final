@@ -1,4 +1,4 @@
-
+'use client';
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";
@@ -9,7 +9,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { Calendar, Clock, FileText, MessageCircle, PlusCircle, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import Link from 'next/link';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { motion } from "framer-motion";
 
 // Demo data for dashboard
@@ -182,7 +184,7 @@ export default function TherapistDashboard() {
             </div>
             
             <div className="flex flex-wrap gap-2">
-              <Link to="/therapist/posts/create">
+              <Link href="/therapist/posts/create">
                 <Button variant="outline" className="gap-2">
                   <FileText className="h-4 w-4" />
                   <span>Create Post</span>
@@ -288,7 +290,7 @@ export default function TherapistDashboard() {
                     ))}
                   </CardContent>
                   <CardFooter>
-                    <Link to="/therapist/chat" className="w-full">
+                    <Link href="/therapist/chat" className="w-full">
                       <Button variant="outline" className="w-full">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Open All Messages
