@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Assessment from '@/pages/Assessment'; // Adjusted import path for Assessment
+import Assessment from '@/app/assessment/page'; // Or directly import the component if it's exported as a named export
 import Link from 'next/link'; // Import Next.js Link component
 import Image from 'next/image'; // Import Next.js Image component for optimization
 

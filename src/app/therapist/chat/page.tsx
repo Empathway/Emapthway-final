@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom'; const navigate = useNavigate(); navigate('/some-path');
+import { useParams } from 'react-router-dom'; const { id } = useParams();
 // import { useParams, useNavigate, Link } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";

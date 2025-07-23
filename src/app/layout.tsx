@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { Outfit, Playfair_Display } from 'next/font/google'; // Import your specific fonts
 import './globals.css';
-import { AuthProvider } from './auth-provider';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as SonnerToaster } from '@/components/ui/sonner';
 import { TooltipProvider } from "@/components/ui/tooltip";
