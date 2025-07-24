@@ -1,3 +1,5 @@
+// src/app/patient/anxiety-calmer/page.tsx
+'use client'; // This directive is CRUCIAL for client-side hooks like useState, useRef, useEffect
 
 import { useState, useRef, useEffect } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
@@ -7,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Play, Pause, SkipForward, SkipBack, Volume2, Heart } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Assuming framer-motion is correctly set up as client-side
 
 // Types
 interface Track {
@@ -147,13 +149,9 @@ export default function AnxietyCalmer() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [currentTrack]);
+  }, [currentTrack, volume]); // Added volume to dependencies
   
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume / 100;
-    }
-  }, [volume]);
+  // useEffect moved above to be combined with cleanup above
   
   const updateProgress = () => {
     if (audioRef.current) {
@@ -177,11 +175,12 @@ export default function AnxietyCalmer() {
     setCurrentTrack(track);
     setIsPlaying(true);
     
-    setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.play();
-      }
-    }, 100);
+    // Using a more robust way to play audio after setting source
+    if (audioRef.current) {
+      audioRef.current.src = track.audioUrl; // Set src directly
+      audioRef.current.load(); // Load the new audio
+      audioRef.current.play().catch(e => console.error("Error playing audio:", e)); // Catch potential play errors
+    }
   };
   
   const togglePlayPause = () => {
@@ -190,14 +189,14 @@ export default function AnxietyCalmer() {
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
-      audioRef.current?.play();
+      audioRef.current?.play().catch(e => console.error("Error playing audio:", e));
     }
     
     setIsPlaying(!isPlaying);
   };
   
   const playNextTrack = () => {
-    if (!currentTrack) return;
+    if (!currentTrack || filteredTracks.length === 0) return;
     
     const currentIndex = filteredTracks.findIndex(track => track.id === currentTrack.id);
     const nextIndex = (currentIndex + 1) % filteredTracks.length;
@@ -205,7 +204,7 @@ export default function AnxietyCalmer() {
   };
   
   const playPreviousTrack = () => {
-    if (!currentTrack) return;
+    if (!currentTrack || filteredTracks.length === 0) return;
     
     const currentIndex = filteredTracks.findIndex(track => track.id === currentTrack.id);
     const prevIndex = (currentIndex - 1 + filteredTracks.length) % filteredTracks.length;
@@ -330,9 +329,10 @@ export default function AnxietyCalmer() {
             transition={{ duration: 0.3 }}
           >
             <Card className="fixed bottom-0 left-0 right-0 z-50 rounded-none border-t glass-card">
+              {/* The audio element is critical for playing sound */}
               <audio
                 ref={audioRef}
-                src={currentTrack.audioUrl}
+                // src={currentTrack.audioUrl} // Moved to playTrack function
                 onTimeUpdate={updateProgress}
                 onLoadedMetadata={() => audioRef.current && setDuration(audioRef.current.duration)}
                 onEnded={handleTrackEnd}

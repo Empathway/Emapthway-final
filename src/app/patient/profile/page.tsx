@@ -1,5 +1,7 @@
+// src/app/patient/profile/page.tsx
+'use client'; // Added this line
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layouts/DashboardLayout";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,17 +22,31 @@ export default function PatientProfile() {
   const { user, updateProfile } = useAuth();
   
   const [profileData, setProfileData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    phoneNumber: user?.phoneNumber || "",
-    companyName: user?.companyName || "",
-    bio: user?.bio || "",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    companyName: "",
+    bio: "",
     jobTitle: "Construction Site Manager",
     jobExperience: "8 years",
     emergencyContact: "",
     emergencyPhone: "",
   });
   
+  useEffect(() => {
+    if (user) {
+      setProfileData(prev => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+        phoneNumber: user.phoneNumber || "",
+        companyName: user.companyName || "",
+        bio: user.bio || "",
+      }));
+      setProfileImagePreview(user.profilePic || null);
+    }
+  }, [user]);
+
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -47,7 +63,7 @@ export default function PatientProfile() {
   });
   
   const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(user?.profilePic || null);
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   
   const [submitting, setSubmitting] = useState(false);
   const [passwordSubmitting, setPasswordSubmitting] = useState(false);
@@ -81,15 +97,15 @@ export default function PatientProfile() {
     
     try {
       // In a real app, you would upload the profile image to storage and get a URL
-      const profileData = {
+      const dataToUpdate = {
         name: profileData.name,
         phoneNumber: profileData.phoneNumber,
         companyName: profileData.companyName,
         bio: profileData.bio,
-        profilePic: profileImagePreview || user?.profilePic,
+        profilePic: profileImagePreview,
       };
       
-      await updateProfile(profileData);
+      await updateProfile(dataToUpdate);
       toast.success("Profile updated successfully");
     } catch (error) {
       toast.error("Failed to update profile. Please try again.");
@@ -160,7 +176,10 @@ export default function PatientProfile() {
                     <CardContent className="flex flex-col items-center justify-center">
                       <div className="relative mb-4">
                         <Avatar className="h-32 w-32">
-                          <AvatarImage src={profileImagePreview || undefined} />
+                          {/* Use Next.js Image component for AvatarImage */}
+                          <AvatarImage
+                            src={profileImagePreview || '/placeholder-avatar.png'}
+                            alt="User Profile" />
                           <AvatarFallback className="text-4xl">
                             {profileData.name.charAt(0)}
                           </AvatarFallback>
