@@ -1,3 +1,6 @@
+// src/hooks/use-toast.ts
+'use client'; // Added this line to mark it as a Client Component
+
 import * as React from "react"
 
 import type {

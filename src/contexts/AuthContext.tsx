@@ -1,6 +1,8 @@
-'use client';
+// src/contexts/AuthContext.tsx
+'use client'; // This directive is CRUCIAL for client-side hooks like useState and useRouter
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'; // CORRECT: Import useRouter from next/navigation
 import { toast } from 'sonner';
 
 export type UserRole = 'patient' | 'therapist';
@@ -84,7 +86,7 @@ const demoUsers = [
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const router = useRouter(); // CORRECT: Use useRouter from next/navigation
 
   useEffect(() => {
     // Check if user is already logged in from localStorage
@@ -115,7 +117,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('user', JSON.stringify(userWithoutPassword));
         
         toast.success(`Welcome back, ${userWithoutPassword.name}!`);
-        navigate(`/${role}`);
+        router.push(`/${role}`); // CORRECT: Use router.push for navigation
       } else {
         toast.error('Invalid email or password');
       }
@@ -154,7 +156,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('user', JSON.stringify(newUser));
       
       toast.success('Registration successful!');
-      navigate(`/${role}`);
+      router.push(`/${role}`); // CORRECT: Use router.push for navigation
     } catch (error) {
       toast.error('Registration failed. Please try again.');
       console.error('Registration error:', error);
@@ -167,7 +169,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     localStorage.removeItem('user');
     toast.success('Logged out successfully');
-    navigate('/login');
+    router.push('/login'); // CORRECT: Use router.push for navigation
   };
 
   const updateProfile = async (data: Partial<User>) => {

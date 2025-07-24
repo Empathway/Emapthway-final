@@ -1,3 +1,6 @@
+// src/components/ui/toaster.tsx
+'use client'; // Added this line to mark it as a Client Component
+
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,

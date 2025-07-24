@@ -319,13 +319,13 @@ export default function TherapistDashboard() {
                             fill="#9b87f5"
                             paddingAngle={1}
                             dataKey="value"
-                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            label={({ name, value }) => `${name} ${value}%`}
                           >
                             {patientIssuesData.map((entry, index) => (
                               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                           </Pie>
-                          <Tooltip formatter={(value) => [`${value}%`, 'Percentage']} />
+                          <Tooltip formatter={(value, name) => [`${value}%`, name]} />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
